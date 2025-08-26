@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!-- Load Vue first -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+
+    <div id="app">
+    <div>  
+           <!-- Text -->
+     <input type="text" v-on:keyup.enter="pressEnter"/>
+         <!-- Button -->
+      <button v-on:click="buttonClick('Vue is Exciting - Button', $event)">Click ME</button>
+    </div>  
+      <br>
+      
+      <!-- OR -->
+      <button v-on:click="buttonClick2('Vue is Exciting', 'You have two messages on click button')">
+        Click the button
+      </button>
+      <br>
+      <!-- OR -->
+      <button v-on:click="buttonClick3('Vue is Exciting','this shows the event', $event)">
+        Click the button see the event
+      </button>
+
+       <!-- Div-->
+         <div v-on:click="buttonClick('Vue is Exciting - Div', $event)">Do something</div>
+
+       <!-- if you use click.stop it stops the event from bubbling to parent elements (calls event.stopPropagation()) -->
+
+       <!-- @click.once runs the handler only the first time; Vue removes the listener after it fires -->
+       <div v-on:click.once="buttonClick('Vue is Exciting - Div', $event)">Do something</div>
+
+       <!-- .prevent calls event.preventDefault(), blocking the element’s default action (e.g., form submit or link navigation) -->
+       <a 
+       href="https://www.google.com/"
+       v-on:click.prevent="buttonClick('Vue is Exciting - Div', $event)">Google~ Prevent The link</a>
+
+      
+    <!-- Event index shows -->
+      <p>x:{{x}}, y:{{y}}</p>
+
+
+     <div>
+        <input type="text"/>
+       </div>
+
+
+    </div>
+
+    <!-- App code after the DOM so #app exists -->
+    <script>
+      const { createApp, ref, reactive } = Vue;
+
+      createApp({
+        setup() {
+          let x = ref(0);
+          let y = ref(0);
+
+          function buttonClick(message, event) {
+            alert(message);
+            x.value = event.x;
+            y.value = event.y;
+          }
+
+          function buttonClick2(message, message2) {
+            alert(message);
+            alert(message2);
+          }
+
+          function buttonClick3(message, message2, event) {
+            console.log(event);
+            alert(message);
+            alert(message2);
+          }
+
+          function pressEnter(){
+            alert('Enter key pressed');
+          }
+
+          return { buttonClick, buttonClick2, buttonClick3, x, y , pressEnter};
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

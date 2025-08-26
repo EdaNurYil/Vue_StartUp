@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!-- Load Vue first -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div v-bind:style="{backgroundColor: 'aqua', fontSize: '40px' }">
+        Hello World!
+      </div>
+      <!-- OR -->
+      <div v-bind:style="{'background-color': 'aqua', 'font-size': '40px' }">
+        Hello World!
+      </div>
+      <!-- OR -->
+      <div v-bind:style="{'background-color': 'aqua', 'font-size': fontSizeTemp + 'px' }">
+        Hello World!
+      </div>
+      <br></br>
+         <!-- OR -->
+      <span class="padding-medium" v-bind:class="{h1:true, 'bg-grey':true}">Random text</span>
+
+      <br ></br></br>
+         <!-- OR -->
+      <span class="padding-medium" v-bind:class="{h1:isMainTitle(), 'bg-green':isGreenBackground()}">Random text</span>
+         <br></br>
+         <br ></br></br>
+         <!-- OR -->
+         <span class="padding-medium" v-bind:class="[isMainTitle()? MainTitle:  '' , borderClass]">Random text</span>
+      
+      <br ></br><br ></br></br>
+         <!-- OR -->
+      <span class="padding-medium" v-bind:class="isMainTitle()? MainTitle:  '' ">Random text</span>
+       <br ></br></br>
+           <!-- OR -->
+      <span v-bind:style=" someStyle.style1">Random style binding </span>
+
+    </div>
+
+    <!-- App code after the DOM so #app exists -->
+    <script>
+      const { createApp } = Vue;
+      const fontSizeTemp = 60;
+
+      createApp({
+        setup() {
+
+            const MainTitle = {
+                h1:true,
+                "bg-grey":true
+            };
+
+            const borderClass = {
+                border:true
+            }
+            const someStyle = {
+                style1:{
+                fontSize: "40px",
+                backgroundColor:"lightgreen",
+                margin: "20px",
+                border: "1px solid black" 
+                }
+                
+            }
+            function isMainTitle(){
+                return true;
+            }
+            function isGreenBackground(){
+                return true;
+            }
+
+          return { fontSizeTemp, isGreenBackground, isMainTitle, MainTitle,someStyle, borderClass };
+        },
+      }).mount("#app");
+    </script>
+
+    <style>
+      .h1{
+        font-size: 30px;
+        color:blueviolet
+      }
+      .h2{
+        font-size: 40px;
+        color: brown;
+      }
+      .bg-grey{
+        background-color: gray;
+      }
+      .bg-green{
+        background-color: green;
+      }
+      .padding-medium{
+        padding: 20px;
+      }
+      .border{
+        border: 15px solid red;
+      }
+    </style>
+  </body>
+</html>

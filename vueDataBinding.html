@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!-- Load Vue first -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+        <div>Learn Vue</div>
+        Name:
+        <input type="text" v-model="name"/>
+       <br/><br/>
+
+       Last Name:
+        <input type="text" v-model.trim="lastName"/>
+
+         <br/><br/>
+         Age:
+        <input type="number" v-model="age"/>
+
+         <br/><br/>
+        Eyes Color:
+         <input type="text" v-model.lazy="eyesColor"/>
+      
+         <br/><br/>
+         Number:
+        <input type="text" v-model.number="language" />
+
+         <br/><br/>
+         Fav Color:
+        <input type="text" v-model="favColor"/>
+
+        <br/><br/>
+        <p>{{counter}}</p>
+        <button v-on:click="counter++">Increment</button>
+        <button @click="counter--">Decrement</button>
+
+         <p>{{obj.count}}</p>
+        <button v-on:click="obj.count++">Increment</button>
+        <button @click="obj.count--">Decrement</button>
+
+
+    
+
+        <br/><br/>
+    
+        <p>Full Name: {{getFullName}}</p>
+        <p>{{name}} {{lastName}} is {{age}} years old.The has {{eyesColor}} eyes color.She knows {{language}} languages.</p>
+    </div>
+
+    <!-- App code after the DOM so #app exists -->
+    <script>
+      const { createApp, ref, reactive, computed, watch } = Vue;
+      let name = ref("Eda");
+      let lastName = ref("       Yilmaz ");
+      let age = ref(26);
+      let eyesColor= ref("Brown");
+      let language= ref("2");
+      let counter = ref(0);
+      let favColor = ref("pink")
+      const obj = reactive ({count: 0})
+
+      //watch er
+      // used computed for deriving a value to display
+      //with ref
+      watch(counter, (newValue, oldValue) => {
+            console.log("Counter value changes from", oldValue, "to", newValue );
+            if(newValue ==5){
+                alert("Counter value is 5");
+            }
+        }
+      );
+
+      //with reactive 
+      watch(()=> obj.count, (newValue, oldValue) => {
+            console.log("Counter value changes from", oldValue, "to", newValue );
+            if(newValue ==5){
+                alert("Counter value is 5");
+            }
+        }
+      );
+
+      createApp({
+        setup() {
+          const getFullName = computed(()=>{
+            console.log("getFullName was called");
+            return name.value + " " + lastName.value; //it will only update when  the dependencies of the comptuter properties are updated. because we uese computed
+          });
+
+          //computed
+          const getFavColor = computed((previous)=>{
+            console.log("get previous fav color ", previous);
+            if(previus == "pink"){
+                console.log("Special Fav color");
+    
+            }
+            return favColor; //it will only update when  the dependencies of the comptuter properties are updated. because we uese computed
+          });
+
+          return { name, age, eyesColor, lastName, language, getFullName, counter, favColor, obj };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

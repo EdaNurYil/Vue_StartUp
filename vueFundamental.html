@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!-- Load Vue first -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>{{ message }}</h1>
+      <p>Luck Number : {{luckNumber}}</p>
+      <p>Luck Number List : {{luckNumbers[0]}}</p>
+      <p>Luck Number is an {{luckNumber%2 ==0? "even number" : "odd number"}}</p>
+      <p>{{employee.name}} is {{employee.age}} years old.</p>
+    
+    </div>
+
+    <!-- App code after the DOM so #app exists -->
+    <script>
+      const { createApp, ref } = Vue;
+
+      createApp({
+        setup() {
+          const message = ref("Hello Vue 3!");
+          const luckNumber = ref(7);
+          const luckNumbers = ref([3,7,9,11]);
+          const employee = {
+            name: "Eda",
+            age:26,
+            salary:80000
+
+          };
+          return { 
+            message,
+            luckNumbers,
+            luckNumber,
+            employee
+           };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
